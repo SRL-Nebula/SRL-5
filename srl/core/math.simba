@@ -1518,3 +1518,44 @@ begin
   // last point is tT
   Result[High(Result)] := P2;
 end;
+
+(*
+ProceduresRandomized
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: pascal
+
+    function ProceduresRandomized(Procs: TVariantArray): boolean;
+
+Completes procedures in a random order.
+
+.. note::
+
+    Author: Nebula
+    Last Modified: Aug. 7th, 2012 by Nebula
+
+Example:
+
+.. code-block:: pascal
+     RandomProcOrder(['one', 'two', 'three']); could perform in order
+     (1, 2, 3) or (1, 3, 2) or (2, 1, 3) or (2, 3, 1) or (3, 1, 2) or (3, 2, 1).
+*)
+function ProceduresRandomized(Procs: TVariantArray): boolean;
+var
+  ProcLength, RandProc, i: Integer;
+  ToComplete: TIntegerArray;
+  TVA: TVariantArray;
+begin
+  ProcLength := Length(Procs);
+  SetLength(ToComplete, ProcLength);
+  for i := ProcLength-1 downto 0 do
+    ToComplete[i] := i+1;
+  while (SumIntegerArray(ToComplete) > 0) do
+  begin
+    RandProc := RandomRange(1, ProcLength+1);
+    if ToComplete[RandProc-1] = 0 then
+      continue;
+    ToComplete[RandProc-1] := 0;
+    CallProc(Procs[RandProc-1], TVA);
+  end;
+end;   

@@ -1410,11 +1410,12 @@ LodestoneTeleport
     function LodestoneTeleport(Where: String): Boolean;
 
 Teleports you to chosen location via Lodestone teleport.
+Supports previous-destination.
 
 .. note::
 
     Author: Home
-
+    Last modified: Aug. 08, 2012 by Nebula
 Example:
 
 .. code-block:: pascal
@@ -1426,9 +1427,20 @@ function LodestoneTeleport(Where: String): Boolean;
 var
   TPA: TPointArray;
   TSA: TStringArray;
-  CTS, I: Integer;
+  CTS, I, x, y, HomeDTM: Integer;
 begin
   If not LoggedIn then Exit;
+  if (lowercase(Where) = 'previous') then
+  begin
+    HomeDTM := DTMFromString('mggAAAHicY2NgYDjNxMBwEojPQjGI3QLEDowMDLZQ7AzDQPF9Rz4x/P37F4xX7n0Kxv///2cQAZqFjkGAEQeGAADf8BZ3');
+    if FindDTM(HomeDTM, x, y, MIX1-75, MIY1, MIX2, MIY2+35) then
+    begin
+      Mouse(x, y, 7, 7, false);
+      if WaitOptionMulti(['Previous', 'destination', 'ous-des'], 200) then
+        result := true;
+    end;
+    Exit;
+  end;
   If not LodestoneScreen then Exit;
 
   CTS := GetColorToleranceSpeed;
@@ -1455,4 +1467,4 @@ begin
     end;
 
   ColorToleranceSpeed(CTS);
-end;
+end;       

@@ -194,7 +194,7 @@ Example:
 
 
 *)
-function PercentColorMMEx(Color, Tol, StartRadial, EndRadial, StartRadius, EndRadius: Integer): integer;
+function PercentColorMMEx(Color, Tol: Integer; StartRadial, EndRadial: Extended; StartRadius, EndRadius: Integer): integer;
 var
   TPA: TPointArray;
 begin
@@ -216,7 +216,7 @@ Returns the percent of a colour on the whole minimap.
 
 .. note::
 
-    by Richard
+    by Richard and Nebula
 
 Example:
 
@@ -226,7 +226,7 @@ Example:
 *)
 function PercentColorMM(Color, Tol: Integer): Integer;
 begin
-  Result := PercentColorMMEx(Color, Tol, 0, 360, 0, 76);
+  Result := PercentColorMMEx(Color, Tol, -pi, pi, 0, 76);
 end;
 
 function LoggedIn: Boolean; forward;
